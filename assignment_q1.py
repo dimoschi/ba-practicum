@@ -1,7 +1,4 @@
-import os
-import pandas as pd
-import numpy as np
-from datetime import datetime
+import re
 
 
 def is_palindrome(word):
@@ -24,9 +21,27 @@ def create_tuples(list_a, list_b):
     return results
 
 
-def powerset(input_set):
-    return None
+def get_power_set(input_set):
+    # Empty set declared as frozenset
+    power_set = [frozenset()]
+
+    for element in input_set:
+        new_sets = []
+        for subset in power_set:
+            new_sets.append(subset | set([element, ]))
+        power_set.extend(frozenset(new_sets))
+
+    return set(power_set)
 
 
 def list_keys(input_dict, regex):
-    return None
+    try:
+        pattern = re.compile(regex)
+    except TypeError:
+        print("Regular expression is not a string or a compiled pattern")
+    keys_list = []
+    for key in input_dict.keys():
+        if pattern.match(key):
+            keys_list.append(key)
+
+    return keys_list
